@@ -21,8 +21,18 @@ module.exports = function (Component) {
         showRequired: this.showRequired,
         showError: this.showError,
         isValidValue: this.isValidValue,
+        ref: 'instance',
         ...this.props
       });
+    },
+    getInstance: function() {
+      var instance = this.refs.instance;
+      // we could be wrapping some other HOC. Turtles all the way down.
+      if (typeof instance.getInstance === "function") {
+        return instance.getInstance();
+      }
+      // unless we run out of turtles.
+      return instance;
     }
   });
 };
